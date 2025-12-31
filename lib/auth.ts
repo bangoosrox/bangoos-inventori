@@ -2,15 +2,32 @@ import { supabase } from "./supabase";
 import { User } from "./supabase";
 
 export async function signIn(email: string, password: string) {
+  console.log("🔐 Login attempt:", { email, hasPassword: !!password });
+
   if (!supabase) {
+    console.error("❌ Supabase not initialized");
     return { data: null, error: new Error("Supabase not initialized") };
   }
 
-  const { data, error } = await supabase.auth.signInWithPassword({
-    email,
-    password,
-  });
-  return { data, error };
+  try {
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    console.log("🔍 Supabase response:", { data: !!data, error: error?.message });
+
+    if (error) {
+      console.error("❌ Login error:", error.message);
+    } else {
+      console.log("✅ Login successful for:", email);
+    }
+
+    return { data, error };
+  } catch (err) {
+    console.error("❌ Unexpected error:", err);
+    return { data: null, error: new Error("Unexpected error during login") };
+  }
 }
 
 export async function signUp(email: string, password: string, name: string, role: "admin" | "manager" | "employee") {

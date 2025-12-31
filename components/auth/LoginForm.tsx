@@ -14,22 +14,31 @@ export default function LoginForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    console.log("📝 Form submitted:", { email, hasPassword: !!password });
+
     setLoading(true);
     setError("");
 
     try {
+      console.log("🔄 Calling signIn function...");
       const { signIn } = await import("@/lib/auth");
       const { error } = await signIn(email, password);
 
+      console.log("📊 Login result:", { error: error?.message });
+
       if (error) {
-        setError("Email atau password salah");
+        console.error("❌ Setting error message:", error.message);
+        setError(error.message);
       } else {
+        console.log("✅ Login successful, refreshing router...");
         router.refresh();
       }
     } catch (err) {
+      console.error("💥 Unexpected error in handleSubmit:", err);
       setError("Terjadi kesalahan. Silakan coba lagi.");
     } finally {
       setLoading(false);
+      console.log("🏁 Form submission completed");
     }
   };
 
