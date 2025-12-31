@@ -30,8 +30,8 @@ export default function LoginForm() {
         console.error("❌ Setting error message:", error.message);
         setError(error.message);
       } else {
-        console.log("✅ Login successful, refreshing router...");
-        router.refresh();
+        console.log("✅ Login successful, redirecting to /admin...");
+        window.location.href = "/admin";
       }
     } catch (err) {
       console.error("💥 Unexpected error in handleSubmit:", err);
