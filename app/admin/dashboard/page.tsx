@@ -17,6 +17,37 @@ export default async function AdminDashboard() {
   }
 
   // Fetch real data
+  const { supabase } = await import("@/lib/supabase");
+
+  if (!supabase) {
+    return (
+      <div
+        style={{
+          minHeight: "100vh",
+          background: "linear-gradient(135deg, #2563eb 0%, #7c3aed 50%, #4f46e5 100%)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: "2rem",
+        }}
+      >
+        <div
+          style={{
+            backgroundColor: "rgba(255, 255, 255, 0.1)",
+            backdropFilter: "blur(8px)",
+            borderRadius: "1rem",
+            border: "1px solid rgba(255, 255, 255, 0.2)",
+            padding: "2rem",
+            textAlign: "center",
+          }}
+        >
+          <h2 style={{ color: "white", marginBottom: "1rem" }}>Database Connection Error</h2>
+          <p style={{ color: "#BFDBFE" }}>Unable to connect to database. Please check your configuration.</p>
+        </div>
+      </div>
+    );
+  }
+
   const [{ count: totalUsers }, { count: totalItems }, { data: lowStockItems }] = await Promise.all([
     supabase.from("users").select("*", { count: "exact", head: true }),
     supabase.from("inventory").select("*", { count: "exact", head: true }),
