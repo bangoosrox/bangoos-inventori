@@ -31,7 +31,18 @@ export default function LoginForm() {
         setError(error.message);
       } else {
         console.log("✅ Login successful, redirecting to /admin...");
+
+        // Try direct redirect first
         window.location.href = "/admin";
+
+        // Fallback: if redirect fails, show manual link
+        setTimeout(() => {
+          console.log("🔄 Checking if redirect worked...");
+          if (window.location.pathname === "/") {
+            console.log("⚠️ Redirect failed, showing manual link");
+            setError("Login successful! Click here to go to dashboard: <a href='/admin' style='color: white; text-decoration: underline;'>Go to Admin Dashboard</a>");
+          }
+        }, 2000);
       }
     } catch (err) {
       console.error("💥 Unexpected error in handleSubmit:", err);
