@@ -33,35 +33,34 @@ export default function LoginForm() {
     }
   };
 
-  const inputStyle = {
-    backgroundColor: "rgba(255, 255, 255, 0.1)",
-    borderColor: "rgba(255, 255, 255, 0.2)",
-    color: "white",
-    paddingLeft: "2.5rem",
-    paddingRight: "2.5rem",
-  };
-
-  const buttonStyle = {
-    backgroundColor: "white",
-    color: "#2563eb",
-    fontWeight: "600",
-    padding: "0.75rem 1rem",
-    borderRadius: "0.75rem",
-    border: "none",
-    cursor: "pointer",
-    transition: "all 0.2s",
-    width: "100%",
-  };
-
   return (
-    <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
-      <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-        <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-          <label htmlFor="email" style={{ color: "white", fontSize: "0.875rem", fontWeight: "500" }}>
+    <form onSubmit={handleSubmit}>
+      <div style={{ marginBottom: "1.5rem" }}>
+        <div style={{ marginBottom: "1rem" }}>
+          <label
+            htmlFor="email"
+            style={{
+              display: "block",
+              color: "white",
+              fontSize: "0.875rem",
+              fontWeight: "500",
+              marginBottom: "0.5rem",
+            }}
+          >
             Email
           </label>
           <div style={{ position: "relative" }}>
-            <Mail className="absolute left-3 top-3 h-4 w-4" style={{ color: "#BFDBFE" }} />
+            <Mail
+              style={{
+                position: "absolute",
+                left: "0.75rem",
+                top: "0.75rem",
+                width: "1rem",
+                height: "1rem",
+                color: "#BFDBFE",
+                zIndex: 1,
+              }}
+            />
             <input
               id="email"
               type="email"
@@ -70,24 +69,55 @@ export default function LoginForm() {
               onChange={(e) => setEmail(e.target.value)}
               required
               style={{
-                ...inputStyle,
                 width: "100%",
-                padding: "0.5rem 0.75rem 0.5rem 2.5rem",
-                borderRadius: "0.375rem",
-                border: "1px solid rgba(255, 255, 255, 0.2)",
+                padding: "0.75rem",
+                paddingLeft: "2.5rem",
+                backgroundColor: "rgba(255, 255, 255, 0.15)",
+                border: "1px solid rgba(255, 255, 255, 0.3)",
+                borderRadius: "0.5rem",
+                color: "white",
                 fontSize: "0.875rem",
                 outline: "none",
+                boxSizing: "border-box",
+                transition: "all 0.2s",
+              }}
+              onFocus={(e) => {
+                e.target.style.borderColor = "rgba(255, 255, 255, 0.5)";
+                e.target.style.backgroundColor = "rgba(255, 255, 255, 0.2)";
+              }}
+              onBlur={(e) => {
+                e.target.style.borderColor = "rgba(255, 255, 255, 0.3)";
+                e.target.style.backgroundColor = "rgba(255, 255, 255, 0.15)";
               }}
             />
           </div>
         </div>
 
-        <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-          <label htmlFor="password" style={{ color: "white", fontSize: "0.875rem", fontWeight: "500" }}>
+        <div style={{ marginBottom: "1rem" }}>
+          <label
+            htmlFor="password"
+            style={{
+              display: "block",
+              color: "white",
+              fontSize: "0.875rem",
+              fontWeight: "500",
+              marginBottom: "0.5rem",
+            }}
+          >
             Password
           </label>
           <div style={{ position: "relative" }}>
-            <Lock className="absolute left-3 top-3 h-4 w-4" style={{ color: "#BFDBFE" }} />
+            <Lock
+              style={{
+                position: "absolute",
+                left: "0.75rem",
+                top: "0.75rem",
+                width: "1rem",
+                height: "1rem",
+                color: "#BFDBFE",
+                zIndex: 1,
+              }}
+            />
             <input
               id="password"
               type={showPassword ? "text" : "password"}
@@ -95,13 +125,26 @@ export default function LoginForm() {
               onChange={(e) => setPassword(e.target.value)}
               required
               style={{
-                ...inputStyle,
                 width: "100%",
-                padding: "0.5rem 2.5rem 0.5rem 2.5rem",
-                borderRadius: "0.375rem",
-                border: "1px solid rgba(255, 255, 255, 0.2)",
+                padding: "0.75rem",
+                paddingLeft: "2.5rem",
+                paddingRight: "2.5rem",
+                backgroundColor: "rgba(255, 255, 255, 0.15)",
+                border: "1px solid rgba(255, 255, 255, 0.3)",
+                borderRadius: "0.5rem",
+                color: "white",
                 fontSize: "0.875rem",
                 outline: "none",
+                boxSizing: "border-box",
+                transition: "all 0.2s",
+              }}
+              onFocus={(e) => {
+                e.target.style.borderColor = "rgba(255, 255, 255, 0.5)";
+                e.target.style.backgroundColor = "rgba(255, 255, 255, 0.2)";
+              }}
+              onBlur={(e) => {
+                e.target.style.borderColor = "rgba(255, 255, 255, 0.3)";
+                e.target.style.backgroundColor = "rgba(255, 255, 255, 0.15)";
               }}
             />
             <button
@@ -116,9 +159,18 @@ export default function LoginForm() {
                 color: "#BFDBFE",
                 cursor: "pointer",
                 padding: "0",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+              onMouseOver={(e) => {
+                e.currentTarget.style.color = "white";
+              }}
+              onMouseOut={(e) => {
+                e.currentTarget.style.color = "#BFDBFE";
               }}
             >
-              {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+              {showPassword ? <EyeOff style={{ width: "1rem", height: "1rem" }} /> : <Eye style={{ width: "1rem", height: "1rem" }} />}
             </button>
           </div>
         </div>
@@ -128,13 +180,21 @@ export default function LoginForm() {
         <div
           style={{
             backgroundColor: "rgba(239, 68, 68, 0.2)",
-            borderColor: "rgba(239, 68, 68, 0.3)",
-            borderWidth: "1px",
+            border: "1px solid rgba(239, 68, 68, 0.3)",
             borderRadius: "0.5rem",
-            padding: "1rem",
+            padding: "0.75rem",
+            marginBottom: "1.5rem",
           }}
         >
-          <p style={{ color: "#FCA5A5", fontSize: "0.875rem" }}>{error}</p>
+          <p
+            style={{
+              color: "#FCA5A5",
+              fontSize: "0.875rem",
+              margin: 0,
+            }}
+          >
+            {error}
+          </p>
         </div>
       )}
 
@@ -142,37 +202,52 @@ export default function LoginForm() {
         type="submit"
         disabled={loading}
         style={{
-          ...buttonStyle,
-          opacity: loading ? 0.5 : 1,
+          width: "100%",
+          backgroundColor: "white",
+          color: "#2563eb",
+          fontWeight: "600",
+          padding: "0.75rem 1rem",
+          borderRadius: "0.75rem",
+          border: "none",
           cursor: loading ? "not-allowed" : "pointer",
+          fontSize: "0.875rem",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: "0.5rem",
+          transition: "all 0.2s",
+          opacity: loading ? 0.5 : 1,
+          boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
         }}
         onMouseOver={(e) => {
           if (!loading) {
-            e.currentTarget.style.backgroundColor = "#EFF6FF";
-            e.currentTarget.style.transform = "scale(1.02)";
+            e.currentTarget.style.backgroundColor = "#F0F9FF";
+            e.currentTarget.style.transform = "translateY(-1px)";
+            e.currentTarget.style.boxShadow = "0 10px 15px -3px rgba(0, 0, 0, 0.1)";
           }
         }}
         onMouseOut={(e) => {
           if (!loading) {
             e.currentTarget.style.backgroundColor = "white";
-            e.currentTarget.style.transform = "scale(1)";
+            e.currentTarget.style.transform = "translateY(0)";
+            e.currentTarget.style.boxShadow = "0 4px 6px -1px rgba(0, 0, 0, 0.1)";
           }
         }}
       >
         {loading ? (
           <>
-            <Loader2 className="mr-2 h-4 w-4 animate-spin" style={{ display: "inline-block", marginRight: "0.5rem" }} />
+            <Loader2 style={{ width: "1rem", height: "1rem", animation: "spin 1s linear infinite" }} />
             Masuk...
           </>
         ) : (
           <>
-            <LogIn className="mr-2 h-4 w-4" style={{ display: "inline-block", marginRight: "0.5rem" }} />
+            <LogIn style={{ width: "1rem", height: "1rem" }} />
             Masuk
           </>
         )}
       </button>
 
-      <div style={{ textAlign: "center" }}>
+      <div style={{ textAlign: "center", marginTop: "1.5rem" }}>
         <p style={{ color: "#BFDBFE", fontSize: "0.875rem" }}>
           Belum punya akun?{" "}
           <button
@@ -183,6 +258,7 @@ export default function LoginForm() {
               color: "white",
               textDecoration: "underline",
               cursor: "pointer",
+              fontSize: "0.875rem",
             }}
             onMouseOver={(e) => {
               e.currentTarget.style.color = "#DBEAFE";
