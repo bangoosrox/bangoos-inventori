@@ -34,6 +34,11 @@ export default async function Home() {
 
 async function getUserProfile(userId: string) {
   const { supabase } = await import("@/lib/supabase");
+
+  if (!supabase) {
+    return { data: null, error: new Error("Supabase not initialized") };
+  }
+
   const { data, error } = await supabase.from("users").select("*").eq("id", userId).single();
   return { data, error };
 }
