@@ -3,20 +3,35 @@ import { getCurrentUser } from "@/lib/auth";
 import LoginForm from "@/components/auth/LoginForm";
 
 export default async function Home() {
+  console.log("🏠 Loading home page...");
   const user = await getCurrentUser();
+  console.log("👤 Current user:", { user: !!user, userId: user?.id });
 
   if (user) {
+    console.log("🔍 Getting user profile for:", user.id);
     const { data: profile } = await getUserProfile(user.id);
+    console.log("📋 User profile:", { profile: !!profile, role: profile?.role });
+
     if (profile) {
+      console.log("🎯 Redirecting based on role:", profile.role);
       switch (profile.role) {
         case "admin":
+          console.log("➡️ Redirecting to /admin");
           redirect("/admin");
         case "manager":
+          console.log("➡️ Redirecting to /manager");
           redirect("/manager");
         case "employee":
+          console.log("➡️ Redirecting to /employee");
           redirect("/employee");
+        default:
+          console.log("⚠️ Unknown role, staying on login");
       }
+    } else {
+      console.log("❌ No profile found for user:", user.id);
     }
+  } else {
+    console.log("🔓 No user logged in, showing login form");
   }
 
   return (
@@ -104,12 +119,31 @@ export default async function Home() {
 }
 
 async function getUserProfile(userId: string) {
+  console.log("🔎 getUserProfile called for:", userId);
   const { supabase } = await import("@/lib/supabase");
 
   if (!supabase) {
+    console.error("❌ Supabase not initialized in getUserProfile");
     return { data: null, error: new Error("Supabase not initialized") };
   }
 
-  const { data, error } = await supabase.from("users").select("*").eq("id", userId).single();
-  return { data, error };
+  try {
+    console.log("📊 Querying users table...");
+    const { data, error } = await supabase.from("users").select("*").eq("id", userId).single();
+
+    console.log("📋 Query result:", { data: !!data, error: error?.message });
+
+    if (error) {
+      console.error("❌ Database error:", error);
+    } else if (data) {
+      console.log("✅ User profile found:", { id: data.id, email: data.email, role: data.role });
+    } else {
+      console.log("⚠️ No profile found in users table");
+    }
+
+    return { data, error };
+  } catch (err) {
+    console.error("💥 Unexpected error in getUserProfile:", err);
+    return { data: null, error: new Error("Unexpected error") };
+  }
 }
